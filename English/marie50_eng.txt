@@ -1,1 +1,77 @@
+//========================================================================
+//
+//	 marie50_ENG.txt
+//
+//  Created by Caitlyn Rousseau on 19/10/21.
+//  Copyright © 2021 Caitlyn Rousseau. All rights reserved.
+//
+//=======================================================================
+
+//First 'loop' is going to capture every 50 intergers.
+loop,  	Clear
+        //Data capture.
+  		Input 
+  		StoreI index //Stored in memory space (AC).
+        Load sum //Load 'sum' value (default, 0 DEC), 
+        AddI index //And it gets added.
+        Store sum //Overwritten in 'sum'.
+        
+        Load index //Load 'index' value.
+        Add one //Adds one, meaning
+        		//that an integer has been inputed.
+        Store index //Stored in 'index'.
+        Subt max //Substracts 'max' from 'index' (100, DEC).
+  		Skipcond 400 //(AC = 0) If the difference between 'index' y 'max'
+        			//is 0 this means that the 50 have been inputed correctly: 
+                    //Skipts to 'division'.
+        Jump loop //'index' by default is 50, and it was being added one
+        		  //each time user entered an int. If the difference
+                  //it's not 0 this means that there are still integers waiting
+                  //to be entered so it returns to the first cycle (loop).
+		Jump division
+
+//'iteration', 
+iteration,  Load count //Loads 'count', which is used as a counter of
+					   //how many times 50 was substracted to
+                       //variable 'sum' (successive subtraction).
+   	    	Add one //It's going to be add successively,
+            Store count //Stored in 'count', will act as quotient
+            Jump division//Return to cycle 'division'
+            
+//'division', will be substracting successively.
+//(rest-res, res dec 50)          
+division,   Load sum // Load 'sum' value obtained after entering all inputs.
+   	    	Subt fifty //Subtract 50.
+            Store sum //Its differences is stored in 'sum'
+            Skipcond 000//(AC < 0) If difference is negative this means that
+            			//quotient has been gathered.
+            Jump iteration
+            Load count //After'iteration', load 'count' value,
+            		   //which is both the quotient of division, 
+                       //and also the mean value of the 50 integers.
+  	   		Output
+       		jump new //After calculating the mean it goes to the final cycle
+            		   //which acts as a reset of all data.
+
+//'new' cycle restores all data labels to its default values. 
+//Remember that throughtout the program, variables' values were changing
+//its values, and if we don't reset them both Skipcond
+//400, and 000 will not perform correctly, and so the program will not be infinite.
+new, load fifty//50, DEC
+	   store index //Restores 'index' value to 50, DEC.
+       load zero//0, DEC 
+       store count //Restores 'count' value to 0, DEC
+       store sum //Restores 'sum' value to 0, DEC
+       jump loop //Returns to the beginning, ready to receive a new set
+       			 //of integers, and calculate their mean.
+
+sum, DEC 0 //Variable where the total sum will be stored.
+count, DEC 0 //Variable that will be counting how many subtractions were done
+			 //in order to get the mean (quotient).
+zero, dec 0 //Variable that will reset data to its default values.
+one, DEC 1 //Variable that will be adding one by one.
+index, DEC 50 //Variable in which is going to be iterated until it reaches 100,
+			  //traversing through the list.
+max, DEC 100 //Limit for the 'index' variable.
+fifty, DEC 50 //Variable que nos servirá para hacer reset de las etiquetas.
 
